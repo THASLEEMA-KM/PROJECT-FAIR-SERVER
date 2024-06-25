@@ -50,7 +50,26 @@ exports.loginController = async (req,res) =>
                     res.status(404).json("Invalid Email / Password..")
                 }
         } catch (error) {
-            res.status(401).json(err)
+            res.status(401).json(error)
             
         }
+    }
+
+// edit Profile
+exports.editProfileContorller = async (req,res) =>
+    {
+        console.log("inside editProfileContorller");
+        const {username,email,password,github,linkedin,profilePic} = req.body
+        // console.log(username,email,password,github,linkedin,profilePic);
+        const uploadimage = req.file?req.file.filename:profilePic
+        const userId = req.payload
+
+        try {
+            const updatedUser = await users.findByIdAndUpdate({_id:userId},{username,email,password,github,linkedin,profilePic:uploadimage},{new:true})
+            await updatedUser.save()
+            res.status(200).json(updatedUser)
+        } catch (error) {
+            res.status(401).json(error)
+        }
+   
     }

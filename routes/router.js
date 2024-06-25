@@ -23,4 +23,14 @@ router.get('/all-projects',jwtmiddleware,projectController.allProjectsController
 // user projects
 router.get('/user-projects',jwtmiddleware,projectController.getUserProjectsController)
 
+// edit project
+router.put('/project/:pid/edit',jwtmiddleware,multerMiddleware.single('projImage'),projectController.editProjectController)
+
+
+// remove project
+router.delete('/project/:pid/remove',jwtmiddleware,projectController.removeProjectController)
+
+// edit profile
+router.put('/user/edit',jwtmiddleware,multerMiddleware.single('profilePic'),userController.editProfileContorller)
+
 module.exports = router
